@@ -3,4 +3,18 @@ The old, clunky, and outdated code for my hippocampal morphometry pipeline. The 
 
 Primarily BASH script-based. Requires [hippodeep_pytorch](https://github.com/bthyreau/hippodeep_pytorch) and [SlicerSALT](https://salt.slicer.org/).
 
-Refer to comments in code for directions on properly running these scripts.
+The intended order of running these scripts goes something like this:
+
+1. `SAP_create_project.sh` to create a basic directory hierarchy for the project and the various files produced by segmentation, SPHARM-PDM, SlicerSALT modules, etc.
+   
+2. `SAP_hippodeep_seg.sh` for **fast, machine learning-based hippocampal (only) segmentation** via _hippodeep_pytorch_ or `SAP_FS_seg.sh` for **[FreeSurfer-based](https://surfer.nmr.mgh.harvard.edu/) multi-ROI segmentation**. `batch_hippodeep_seg.sh` is an older version of the former.
+   
+3. If using FreeSurfer to segment your T1-weighted images, `SAP_extract_ROIs.sh` will use [FSL](https://fsl.fmrib.ox.ac.uk/fsl/docs/#/)'s `fslmaths` tool to extract your segmented volumes (masks) using FreeSurfer's `aseg.nii.gz` label map.
+   
+4. `SAP_SPHARM_P920.sh` for running SlicerSALT's [SPHARM-PDM](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3062073/) computation on the newly produced segmentation volumes.
+   
+5. `batch_model2model_distance.py` and `SAP_meshmath.py` are both ways to interact with SlicerSALT's ["Model to Model Distance"](https://www.slicer.org/wiki/Documentation/Nightly/Extensions/ModelToModelDistance) module/functionality via command line for batch processing of multiple VTK files. Requires VTK models produced via SPHARM-PDM.
+
+`SAP_extract_points.py` is not required for the pipeline, but is a script that goes through a directory of VTK models, extracts the Cartesian coordinates of each model's vertices, and saves them to a per-model CSV file. Useful for calculating vectors, visualizing a model as a 3D scatterplot/point cloud in MATLAB, etc.
+
+Refer to comments in code for detailed directions on running these scripts.
