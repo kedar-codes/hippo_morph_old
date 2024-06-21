@@ -17,4 +17,6 @@ The intended order of running these scripts goes something like this:
 
 `SAP_extract_points.py` is not required for the pipeline, but is a script that goes through a directory of VTK models, extracts the Cartesian coordinates of each model's vertices, and saves them to a per-model CSV file. Useful for calculating vectors, visualizing a model as a 3D scatterplot/point cloud in MATLAB, etc.
 
+The MATLAB_scripts folder contains `vtk_insula_test.m` and `SAP_plot_sig_vert.m`, as well as a handful of CSV and VTK files. `vtk_insula_test.m` is a simple demo to visualize the vertices/points of the included `L_insula.vtk` model as a point cloud/3D scatter plot. `SAP_plot_sig_vert.m` is meant to identify vertices/points that experienced significant change (via vector data contained in the included CSV files) and highlight them in a point cloud/3D scatter plot using the vertices of a template hippocampus contained in `template_vertices.csv`. Significance is calculated via a one-sample Wilcoxon signed rank test. `SAP_plot_sig_vert.m` requires some additional MATLAB toolboxes (Bioinformatics, etc.) to be installed.
+
 Refer to comments in code for detailed directions on running these scripts.
