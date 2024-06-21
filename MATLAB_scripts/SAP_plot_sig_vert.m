@@ -7,7 +7,7 @@
 clear;
 clc;
 
-cd('/path/to/your/working/directory/');
+%cd('/path/to/your/working/directory/');
 
 
 % Import data
